@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>请求超时/请求取消/重复请求</title>
+    <style>
+        #result {
+            width: 200px;
+            height: 400px;
+            border: solid 1px green;
+        }
+    </style>
+</head>
+<body>
+    <button>点击发送请求</button>
+    <div id="result"></div>
+    <button>点击取消请求</button>
+    <script>
+        // 1 请求超时
+        // 2 请求取消
+        // 3 重复请求
+        const btn = document.getElementsByTagName('button')[0];
+        const result = document.getElementById('result');
+        const btn2 = document.getElementsByTagName('button')[1];
+        var xhr = null;
+
+        // 3 请求发送重复解决
+        let isSending = false;
+
+        btn.onclick = function () {
+
+            // 3 如果正在发送,则取消该请求,创建新的请求
+            if(isSending) x.abort();
+
+            xhr = new XMLHttpRequest();
+
+            // 3 修改标识变量的值
+            isSending = true;
+           
+            // 1 超时设置 2s
+            xhr.timeout = 2000;
+            // 1 超时回调
+            xhr.ontimeout = function () {
+                alert('网络异常,请稍后重试...')
+            }
+
+            xhr.open('GET', 'http://127.0.0.1:3000/server');
+            xhr.send();
+            xhr.onreadystatechange = function () {
+                if(xhr.readyState === 4){
+                    // 3 修改标识变量的值
+                    isSending = false;
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        result.innerHTML = xhr.response;
+                    }
+                }
+            }
+        }
+
+        // 2 取消请求
+        btn2.onclick = function () {
+            xhr.abort()
+        }
+    </script>
+</body>
+</html>

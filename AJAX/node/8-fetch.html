@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fetch</title>
+</head>
+<body>
+    <div class="wrapper">
+        <h3>fetch-server 发送AJAX请求</h3>
+        <button>GET请求</button>
+        <button>POST请求</button>
+        <button>通用方法请求</button>
+    </div>
+    <script>
+        const btn = document.getElementsByTagName('button');
+        btn[0].onclick = function () {
+            fetch('http://127.0.0.1:3000/fetch-server?vip=11', {
+                method: 'POST',
+                // 头信息
+                headers: {
+                    name: '6666'
+                },
+                body: 'admin=admin&password=123'
+            }).then(res => {
+                // promise 对象
+                console.log(res);
+            })
+        }
+        btn[1].onclick = function () {
+            fetch('http://127.0.0.1:3000/fetch-server', {
+                method: 'POST',
+                // 头信息
+                headers: {
+                    name: '6666'
+                },
+                body: 'admin=admin&password=123'
+            }).then(res => {
+                console.log(res);
+            })
+        }
+    </script>
+</body>
+</html>

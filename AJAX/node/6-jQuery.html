@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery AJAX</title>
+</head>
+<body>
+    <div class="wrapper">
+        <h3>jQuery 发送AJAX请求</h3>
+        <button>GET请求</button>
+        <button>POST请求</button>
+        <button>通用方法请求</button>
+    </div>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        $('button').eq(0).click(function () {
+            console.log(1212);
+            $.get('http://127.0.0.1:3000/jQuery-server',{
+                a: 100,
+                b: 200,
+                c: 300
+            },function (data) {
+                console.log(data);
+            },'json')
+        })
+
+        $('button').eq(1).click(function () {
+            $.post('http://127.0.0.1:3000/jQuery-server',{
+                a: 100,
+                b: 200,
+                c: 300
+            },function (data) {
+                console.log(data);
+            },'json')
+        })
+
+        $('button').eq(2).click(function () {
+            $.ajax({
+                url: 'http://127.0.0.1:3000/jQuery-server',
+                data: {
+                    a: 100,
+                    b: 200,
+                    c: 300
+                },
+                timeout: 2000,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function () {
+                    console.log('请求出错...');
+                },
+                // 头信息
+                headers: {
+                    name: '6666'
+                }
+            })
+        })
+    </script>
+</body>
+</html>

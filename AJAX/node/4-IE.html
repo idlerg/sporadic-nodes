@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IE 浏览器AJAX 缓存解决</title>
+    <style>
+        #result {
+            width: 200px;
+            height: 400px;
+            border: solid 1px green;
+        }
+    </style>
+</head>
+<body>
+    <button>点击发送请求</button>
+    <div id="result"></div>
+    <script>
+        // 在IE浏览器运行,同样的请求IE存在缓存问题
+
+        const btn = document.getElementsByTagName('button')[0];
+        const result = document.getElementById('result');
+
+        btn.onclick = function () {
+            const xhr = new XMLHttpRequest();
+
+            // IE 缓存,设置时间戳参数
+            // xhr.open('GET', 'http://127.0.0.1:3000/ie');
+            xhr.open('GET', 'http://127.0.0.1:3000/ie?t=' + Date.now());
+
+
+            xhr.send();
+            xhr.onreadystatechange = function () {
+                if(xhr.readyState === 4){
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        result.innerHTML = xhr.response;
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
